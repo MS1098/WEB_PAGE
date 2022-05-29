@@ -1,22 +1,8 @@
-const express=require("express");
+const {Router} = require("express");
+const {getproducts, addproduct} = require("../Controllers/ProductController")
+const ProductRoute = Router();
 
-const ProductController=require("../Controllers/ProductController");
+ProductRoute.route("/getproducts/:category").get(getproducts);
 
-
-const productRoute=express.Router();
-  productRoute.route("/getproducts/:category").get( async (req,res)=>{
-      try{
-          const category=req.params.category;
-          const products=await ProductController(category)
-          return res.send({
-            product:products
-          })
-      }catch(err){
-         console.log(err)
-         throw err;
-      }
-  })
-      
-module.export =productRoute;
-     
- 
+ProductRoute.route("/addproduct").post(addproduct)
+module.exports = ProductRoute;
